@@ -20,15 +20,29 @@
         .error {
             color: red;
         }
+        ul.login{
+            text-align: right;
+            display: inline-block;
+        }
+        nav{
+            display: inline-block;
+        }
     </style>
     <title>{{title}}</title>
 </head>
 <body>
-    <ul>
-        <li class = 'navigation'><a href="/blog">Main Blog Page</a></li>
-        <li class = 'navigation'><a href="/newpost">Add a Blog Entry</a></li>
-    </ul>
-
+    <nav>
+        <ul>
+            <li class = 'navigation'><a href="/index">Home</a></li>
+            <li class = 'navigation'><a href="/blog">All Posts</a></li>
+            <li class = 'navigation'><a href="/newpost">New Post</a></li>
+            
+        </ul>
+        <ul >
+            <li><a href='/login'>Login</a></li>
+            <li><a href='/logout'>Log out</a></li>
+        </ul>
+    </nav>
     {% block content %}
     {% endblock %}
     

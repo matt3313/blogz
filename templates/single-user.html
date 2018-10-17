@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>All Blogz</h1>
+<h1>Blogz</h1>
 
 
     <ul>
@@ -10,7 +10,7 @@
         <li class = 'blog'>
             <a href = "/blog?id={{ blog.id }}" >{{blog.title}}</a>
             <p>{{blog.text}}</p>
-            <p>Written By: <a href='/blog?user={{blog.owner_id}}'>{{blog.owner.username}}</a></p>
+            <p>Written By: <a href='/blog?user={{blog.owner.id}}'>{{blog.owner.username}}</a></p>
         </li>
         {% endfor %}
     </ul>
