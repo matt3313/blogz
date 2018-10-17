@@ -20,12 +20,10 @@
         .error {
             color: red;
         }
+
         ul.login{
-            text-align: right;
             display: inline-block;
-        }
-        nav{
-            display: inline-block;
+            float: right;
         }
     </style>
     <title>{{title}}</title>
@@ -38,9 +36,9 @@
             <li class = 'navigation'><a href="/newpost">New Post</a></li>
             
         </ul>
-        <ul >
-            <li><a href='/login'>Login</a></li>
-            <li><a href='/logout'>Log out</a></li>
+        <ul class = 'login'>
+            <li class ='navigation'><a href='/login'>Login</a></li>
+            <li class = 'navigation'><a href='/logout'>Log out</a></li>
         </ul>
     </nav>
     {% block content %}

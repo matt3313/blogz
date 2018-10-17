@@ -34,12 +34,20 @@ class User(db.Model):
         self.username = username
         self.password = password
 
+
+@app.before_request
+def require_login():
+    allowed_routes = ['signup','index','blog','login']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
+
 @app.route('/index')
 def index():
-    blog = Blog.query.all()
-    user = User.query.all()
-    blog_id = request.args.get('id')
-    return render_template('index.html', title = 'Blogz', user=user, blog=blog)        
+    
+    users = User.query.all()
+    
+    return render_template('index.html', title = 'Blogz', users=users)        
 
 @app.route("/blog", methods=['GET', 'POST'])
 def blog():
@@ -48,8 +56,14 @@ def blog():
         blog = Blog.query.get(blog_id)
         return render_template('single-blog.html', title="Blogz", blog=blog)
 
-    blogs = Blog.query.all()
+    username = request.args.get('user')
+    if (username):
+        owner = User.query.get(username)
+        blogger = User.query.filter_by(username=username).first()
+        user_blogs = Blog.query.filter_by(owner=blogger).all()
+        return render_template('single-user.html', user_blogs=user_blogs)
 
+    blogs = Blog.query.all()
     return render_template("blog.html", title = "Blogz", blogs = blogs)
 
 
@@ -92,11 +106,21 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        password_error =''
         user = User.query.filter_by(username=username).first()
 
         if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
+
+        if user and user.password != password:
+            password_error = "Incorrect Password or Username"
+            return render_template('login.html', password_error=password_error)
+
+        if not user:
+            password_error = "Incorrect Password or Username"
+            return render_template('login.html', password_error=password_error)
+
     else:
         return render_template('login.html')
 
@@ -123,9 +147,9 @@ def is_space(field):
 
 
 @app.route("/signup", methods = ['GET', 'POST'])
-def validate_form():
+def signup():
     if request.method == 'POST':
-        username = request.form['username']
+        user_name = request.form['user_name']
         password = request.form['password']
         verify_password = request.form['password1']
         error_user_name = ''
@@ -133,15 +157,15 @@ def validate_form():
         password_error1 = ''
         invalid_username = 'Thats not a valid user name'
         invalid_password = 'Thats not a valid password'
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = User.query.filter_by(username=user_name).first()
 
-        if is_empty(username):
+        if is_empty(user_name):
             error_user_name = invalid_username
 
-        if is_space(username):
+        if is_space(user_name):
             error_user_name = invalid_username
 
-        elif len(username) < 3 or len(username) > 20:
+        elif len(user_name) < 3 or len(user_name) > 20:
             error_user_name = invalid_username
 
         if is_space(password):
@@ -177,15 +201,15 @@ def validate_form():
 
 
         if not error_user_name and not password_error and not password_error1:
-            new_user = User(username, password)
+            new_user = User(user_name, password)
             db.session.add(new_user)
             db.session.commit()
-            session['username'] = username
+            session['username'] = user_name
             return redirect('/newpost')
             
 
         else:
-            return render_template('signup.html', error_user_name=error_user_name, user_name=username, \
+            return render_template('signup.html', error_user_name=error_user_name, user_name=user_name, \
             password_error = password_error, password_error1 = password_error1)
     else:
         return render_template("signup.html")

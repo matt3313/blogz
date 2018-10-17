@@ -2,8 +2,8 @@
 {% block content %}
 <h1>Blogz</h1>
 <ul>
-    {%for a_user in user%}
-    <li><a href='/blog?user={{ user.id }}'>{{a_user.username}}</a></li>
+    {%for user in users%}
+    <li><a href='/blog?user={{ user.username }}'>{{ user.username }}</a></li>
     {%endfor%}
 </ul>
 {%endblock%}
