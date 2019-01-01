@@ -6,11 +6,11 @@
 
 
     <ul>
-        {% for blog in user_blogs%}
+        {% for blog in user_blogs %}
         <li class = 'blog'>
             <a href = "/blog?id={{ blog.id }}" >{{blog.title}}</a>
             <p>{{blog.text}}</p>
-            <p>Written By: <a href='/blog?user={{blog.owner.id}}'>{{blog.owner.username}}</a></p>
+            <p>Written By: <a href='/blog?user={{blog.owner.username}}'>{{blog.owner.username}}</a></p>
         </li>
         {% endfor %}
     </ul>

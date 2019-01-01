@@ -58,7 +58,7 @@ def blog():
 
     username = request.args.get('user')
     if (username):
-        owner = User.query.get(username)
+        
         blogger = User.query.filter_by(username=username).first()
         user_blogs = Blog.query.filter_by(owner=blogger).all()
         return render_template('single-user.html', user_blogs=user_blogs)

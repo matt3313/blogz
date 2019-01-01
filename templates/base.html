@@ -5,11 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-        li.navigation{
-            display: inline;
-            font-size: 20px;
-            padding: 15px;
+        ul.nav{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            
         }
+        li.navigation{
+         
+            float: left;
+
+        }
+        li a.navi {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
         li.blog{
             list-style: none;
             border-bottom: 1px solid;
@@ -21,24 +37,19 @@
             color: red;
         }
 
-        ul.login{
-            display: inline-block;
-            float: right;
-        }
+
+
     </style>
     <title>{{title}}</title>
 </head>
 <body>
     <nav>
-        <ul>
-            <li class = 'navigation'><a href="/index">Home</a></li>
-            <li class = 'navigation'><a href="/blog">All Posts</a></li>
-            <li class = 'navigation'><a href="/newpost">New Post</a></li>
-            
-        </ul>
-        <ul class = 'login'>
-            <li class ='navigation'><a href='/login'>Login</a></li>
-            <li class = 'navigation'><a href='/logout'>Log out</a></li>
+        <ul class='nav'>
+            <li class = 'navigation'><a class = 'navi' href="/index">Home</a></li>
+            <li class = 'navigation'><a class = 'navi' href="/blog">All Posts</a></li>
+            <li class = 'navigation'><a class = 'navi' href="/newpost">New Post</a></li>
+            <li style= 'float:right' class = 'navigation'><a class = 'navi' href='/login'>Login</a></li>
+            <li style = 'float:right' class = 'navigation'><a class = 'navi' href='/logout'>Log out</a></li>
         </ul>
     </nav>
     {% block content %}
