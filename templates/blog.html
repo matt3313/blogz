@@ -6,7 +6,8 @@
 
 
     <ul>
-        {% for blog in blogs%}
+        {% for blog in blogs %}
+
         <li class = 'blog'>
             <a href = "/blog?id={{ blog.id }}" >{{blog.title}}</a>
             <p>{{blog.text}}</p>
